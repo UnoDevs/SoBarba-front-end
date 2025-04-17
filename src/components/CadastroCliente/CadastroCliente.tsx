@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { useUsuarios } from "../../context/UsuarioContext";
+import axios from "axios";
+import { useUsuarios } from "../UsuarioContent/UsuarioContent";
 import { useNavigate } from "react-router-dom";
-import IconButton from "@/components/iconButton/IconButton";
-import { FaUserPlus } from "react-icons/fa";
-import { clienteService } from "../../services/clienteService"; // Importando o clienteService
 
 function CadastroCliente() {
   const { adicionarUsuario } = useUsuarios();
@@ -36,15 +34,17 @@ function CadastroCliente() {
     if (!canSubmit) return; // Não envia os dados se algum campo estiver vazio
 
     try {
-      const response = await clienteService.addCliente({
+      const response = await axios.post("http://localhost:8081/client", {
         ...formData,  // O campo de data já estará no formato correto (yyyy-MM-dd) com o tipo "date"
+      }, {
+        headers: { "Content-Type": "application/json" }
       });
 
-      console.log("Usuário cadastrado:", response);
+      console.log("Usuário cadastrado:", response.data);
       alert("Usuário cadastrado com sucesso!");
 
       // Adiciona o usuário à lista de usuários (apenas a resposta do backend)
-      adicionarUsuario(response);
+      adicionarUsuario(response.data);
 
       // Limpa o formulário
       setFormData({
@@ -59,14 +59,11 @@ function CadastroCliente() {
   };
 
   return (
-    <div  className="container mt-4">
+    <div>
       <button onClick={handleVoltar}>Voltar</button>
       <h2>Cadastro de Cliente</h2>
-      <button onClick={() => setShowModal(true)} className="btn btn-primary">
-        <IconButton icon={<FaUserPlus />} onClick={() => {}} ariaLabel="Ícone de adicionar usuário" />
-        Cadastrar Cliente
-      </button>
-
+      {/* Botão para abrir o Modal */}
+      <button onClick={() => setShowModal(true)}>Cadastrar Cliente</button>
       {/* Modal do Bootstrap */}
       {showModal && (
         <div className="modal show" tabIndex={-1} style={{ display: 'block' }}>

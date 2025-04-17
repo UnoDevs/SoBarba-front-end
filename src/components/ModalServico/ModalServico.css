@@ -1,0 +1,111 @@
+:root {
+    --primary-color: #007bff; /* Azul para o botão Cadastrar */
+    --danger-color: #dc3545; /* Vermelho para o botão Cancelar */
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --border-radius: 8px;
+  }
+  
+  .modal {
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-dialog {
+    max-width: 500px;
+  }
+  
+  .modal-content {
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+  }
+  
+  .modal-header {
+    border-bottom: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .modal-body {
+    padding: 15px 0;
+  }
+  
+  .form-label {
+    font-weight: bold;
+    color: var(--text-color);
+  }
+  
+  .form-control {
+    border-radius: var(--border-radius);
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .form-check-input {
+    margin-right: 5px;
+  }
+  
+  .btn-primary {
+    background: var(--primary-color);
+    border: none;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    color: white;
+  }
+  
+  .btn-danger {
+    background: var(--danger-color);
+    border: none;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background: #0056b3;
+  }
+  
+  .btn-danger:hover {
+    background: #c82333;
+  }
+  
+  .btn-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .btn-close:hover {
+    color: var(--danger-color);
+  }
+
+  .btn-cadastrar {
+    background-color: #007bff; /* Azul */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-cadastrar:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn-cancelar {
+    background-color: #dc3545; /* Vermelho */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-cancelar:hover {
+    background-color: #a71d2a;
+  }
+  

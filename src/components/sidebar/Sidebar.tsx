@@ -1,12 +1,11 @@
 import React from "react";
 import styles from "./Sidebar.module.css";
 import { FaHome, FaChartBar, FaFolderOpen, FaBoxOpen, FaUsers } from "react-icons/fa";
-import logo from "../../assets/logo.jpg";
 
 const Sidebar: React.FC = () => {
   return (
     <div className={styles.sidebar}>
-      <div className={styles.logo}><img src={logo} alt="Logo" /><span className={styles.logoText}>Só Barba</span></div>
+      <div className={styles.logo}>LOGO</div>
         <aside className="sidebar">
             <ul>
                 <li className={styles.navItem}>

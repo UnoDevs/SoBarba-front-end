@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from "axios";
 import styles from './Modal.module.css';
 import { Usuario } from "../../types/Usuario";
 
@@ -15,36 +16,21 @@ const ModalCadastro: React.FC<ModalProps> = ({
   showModal, 
   closeModal, 
   addCliente, 
-  usuarioEditando,
+  usuarioEditando, 
   salvarEdicao  
 }) => {
   const [nome, setNome] = useState(usuarioEditando?.nome || '');
   const [descricao, setDescricao] = useState(usuarioEditando?.descricao || '');
   const [dataNascimento, setDataNascimento] = useState(usuarioEditando?.dataNascimento || '');
 
+  // Quando 'usuarioEditando' mudar, atualiza os campos do formulário
   useEffect(() => {
-    if (showModal) {
-      if (usuarioEditando) {
-        setNome(usuarioEditando.nome);
-        setDescricao(usuarioEditando.descricao);
-        setDataNascimento(usuarioEditando.dataNascimento);
-      } else {
-        // Limpa os campos ao abrir para cadastro
-        setNome("");
-        setDescricao("");
-        setDataNascimento("");
-      }
+    if (usuarioEditando) {
+      setNome(usuarioEditando.nome);
+      setDescricao(usuarioEditando.descricao);
+      setDataNascimento(usuarioEditando.dataNascimento);
     }
-  }, [showModal, usuarioEditando]); 
-  
-
-  // Modificar closeModal para limpar os campos
-  const closeAndClearModal = () => {
-    closeModal(); // Chama a função de fechar
-    setNome(""); 
-    setDescricao(""); 
-    setDataNascimento(""); 
-  };
+  }, [usuarioEditando]);
 
   if (!showModal) return null;
 
@@ -59,25 +45,25 @@ const ModalCadastro: React.FC<ModalProps> = ({
 
     const novoCliente = { nome, descricao, dataNascimento };
 
-    try {
-      if (usuarioEditando) {
-        await salvarEdicao({
-          id: usuarioEditando.id,  // Adiciona o id para edição
-          nome, 
-          descricao, 
-          dataNascimento
-        });
-      } else {      
+    if (usuarioEditando) {
+      await salvarEdicao({
+        id: usuarioEditando.id,  // Adiciona o id para edição
+        nome, 
+        descricao, 
+        dataNascimento
+      });
+    } else {
+      try {
+        await axios.post('http://localhost:8081/client', novoCliente);
+        alert('Cliente cadastrado com sucesso!');
         await addCliente(novoCliente);
-      }     
-
-    } catch (error) {
-      console.error('Erro ao cadastrar cliente: ', error);
-      alert('Erro ao cadastrar cliente.');
+      } catch (error) {
+        console.error('Erro ao cadastrar cliente: ', error);
+        alert('Erro ao cadastrar cliente.');
+      }
     }
-
-    // closeModal();
-    closeAndClearModal(); // Usa a nova função para fechar e limpar os campos
+      
+    closeModal();
 
   };
 
@@ -109,8 +95,8 @@ const ModalCadastro: React.FC<ModalProps> = ({
             onChange={(e) => setDataNascimento(e.target.value)}
             required
           />
-          <button type="submit" className={styles.modalButton}>{ usuarioEditando ? "Editar" : "Cadastrar" } </button>
-          <button type="button" onClick={closeModal} className={styles.closeButton}>Cancelar</button>
+          <button type="submit" className={styles.modalButton}>{usuarioEditando ? "Editar" : "Cadastrar"} </button>
+          <button type="button" onClick={closeModal} className={styles.closeButton}>Fechar</button>
         </form>
       </div>
     </div>

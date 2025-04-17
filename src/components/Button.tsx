@@ -1,12 +1,11 @@
 import React, { ReactNode } from 'react';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>  {
+interface ButtonProps {
   onClick: () => void;
   ariaLabel: string;
   variant?: "ghost" | "filled";
   size?: "icon" | "small" | "large";
   children: ReactNode;  // Adicionando children do tipo ReactNode
-  className?: string; // <-- Adicione essa linha
 }
 
 const Button: React.FC<ButtonProps> = ({ onClick, ariaLabel, variant = "filled", size = "small", children }) => {
