@@ -1,0 +1,121 @@
+/* Título */
+.titulo-produto {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #343a40;
+  }
+  
+  /* Topo com filtros e cadastro */
+  .topo-produto {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  /* Botões */
+  .btn-outline-dark {
+    border-radius: 12px;
+    font-size: 14px;
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: 0.3s;
+    background-color: #fff;
+    border: 1px solid #000;
+    color: #000;
+  }
+  
+  .btn-outline-dark:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Pesquisa */
+  .pesquisa-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #aaa;
+    border-radius: 12px;
+    padding: 4px 10px;
+    background-color: #fff;
+  }
+  
+  .pesquisa-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    padding: 6px;
+    margin-left: 6px;
+  }
+  
+  .search-icon {
+    color: #333;
+  }
+  
+  /* Tabela */
+  .table {
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  
+  .table th {
+    background-color: #f0f0ff;
+    font-weight: 600;
+    text-align: center;
+    padding: 12px;
+  }
+  
+  .table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px;
+  }
+  
+  /* Ícones */
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 0 5px;
+    transition: 0.3s;
+  }
+  
+  .icon-button.edit {
+    color: #3b82f6;
+  }
+  
+  .icon-button.edit:hover {
+    color: #2563eb;
+  }
+  
+  .icon-button.delete {
+    color: #ef4444;
+  }
+  
+  .icon-button.delete:hover {
+    color: #dc2626;
+  }
+  
+  /* Checkboxes */
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: default;
+  }
+  
+  /* Ajuste na responsividade */
+  @media (max-width: 768px) {
+    .topo-produto {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .pesquisa-container {
+      width: 100%;
+    }
+  }
+  
