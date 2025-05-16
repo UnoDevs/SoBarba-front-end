@@ -1,0 +1,82 @@
+/* Modal Overlay */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Content */
+.modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 600px; /* Largura máxima */
+    width: 80%; /* Largura relativa, para ficar proporcional à tela */
+    max-height: 80%; /* Para limitar a altura máxima */
+    overflow-y: auto; /* Caso o conteúdo ultrapasse a altura máxima */
+}
+
+/* Título do Modal */
+.modalTitle {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+/* Corpo do Modal (Formulário) */
+.modalBody {
+    display: flex;
+    flex-direction: column; /* Coloca os itens em uma coluna */
+    gap: 15px; /* Adiciona espaçamento entre os elementos */
+    margin-bottom: 20px; /* Espaço extra abaixo do formulário */
+    width: 100%; /* Garante que o formulário ocupe toda a largura disponível */
+}
+
+/* Estilo dos Inputs */
+.modalInput {
+    padding: 10px;
+    margin: 0 auto;
+    width: 100%; /* Garante que o input ocupe toda a largura disponível */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botão de Enviar */
+.modalButton {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Garante que o botão tenha a mesma largura do input */
+}
+
+/* Efeito de Hover no Botão de Enviar */
+.modalButton:hover {
+    background-color: #45a049;
+}
+
+/* Botão de Fechar */
+.closeButton {
+    padding: 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Espaçamento para o botão de fechar */
+    width: 100%; /* Garante que o botão tenha a mesma largura do input */
+}
+
+/* Efeito de Hover no Botão de Fechar */
+.closeButton:hover {
+    background-color: #da190b;
+}

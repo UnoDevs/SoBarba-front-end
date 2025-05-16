@@ -1,0 +1,23 @@
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+  
+  /* Hover geral */
+.iconButton:hover {
+  background-color: #f0f0f0;
+}
+  
+  /* Específico para o botão de editar */
+.editButton:hover {
+  background-color: #e0f7fa;
+}
+  
+  /* Específico para o botão de excluir */
+.deleteButton:hover {
+  background-color: #fdecea;
+}

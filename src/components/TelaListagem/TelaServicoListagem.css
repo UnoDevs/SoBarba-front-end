@@ -1,0 +1,215 @@
+/* Estilo geral */
+.container {
+  max-width: 90%;
+  margin: auto;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 12px;
+
+}
+
+h2 {
+  color: #343a40;
+  text-align: left; /* Agora alinhado totalmente à esquerda */
+  margin-bottom: 20px;
+}
+
+/* Estilo dos botões principais (filtro e cadastrar) */
+.filtro-btn,
+.cadastro-btn {
+  border-radius: 20px;
+  background-color: #f3f2ff;
+  font-size: 14px;
+  height: 38px;
+  padding: 6px 16px;
+}
+
+/* Estilo do botão principal antigo */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo da barra do topo (filtros e busca) */
+.topo-servico {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Estilo do campo de busca */
+.pesquisa-container {
+  flex: 1;
+  max-width: 300px;
+  text-align: center;
+}
+
+.pesquisa-input {
+  border-radius: 20px;
+  padding-left: 30px;
+  background-color: #f3f2ff;
+  border: 1px solid #ccc;
+  height: 38px;
+}
+
+/* Estilo da tabela */
+.table {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  background: #007bff;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background: #ffffff; /* Mantém as linhas brancas */
+}
+
+tr:hover {
+  background: #dbeafe;
+}
+
+td {
+  padding: 10px;
+}
+
+/* Estilo dos botões de ação (editar/excluir) */
+.icon-button {
+  background-color: #f3f2ff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.icon-button.edit {
+  color: #007bff;
+}
+
+.icon-button.edit:hover {
+  background-color: #ffeeba;
+}
+
+.icon-button.delete {
+  color: #dc3545;
+}
+
+.icon-button.delete:hover {
+  background-color: #f8d7da;
+}
+
+/* Mantém as linhas da tabela com fundo branco */
+.table-hover tbody tr {
+  background-color: #fff !important;
+}
+
+.titulo-servico {
+  color: #343a40;
+  font-weight: bold;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.topo-servico {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filtro-btn,
+.cadastro-btn {
+  background-color: #f0f0ff;
+  border: 1px solid #000;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pesquisa-container {
+  position: relative;
+  flex: 1;
+  max-width: 280px;
+  text-align: center;
+}
+
+.pesquisa-input {
+  width: 100%;
+  padding: 8px 12px 8px 30px;
+  border-radius: 12px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 14px;
+}
+
+.table-hover tbody tr {
+  background-color: #fff !important;
+}
+
+.icon-button {
+  background-color: #f3f2ff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.icon-button.edit:hover {
+  background-color: #ffeeba;
+}
+
+.icon-button.delete:hover {
+  background-color: #f8d7da;
+}
+.btn.btn-outline-dark:hover {
+  background-color: transparent;
+  color: black;
+  border-color: black;
+}
+
+.pagina-com-sidebar {
+  display: flex;
+}
+
+.conteudo-principal {
+  margin-left: 250px; /* Largura da Sidebar */
+  padding: 2rem;
+  width: 100%;
+}
+

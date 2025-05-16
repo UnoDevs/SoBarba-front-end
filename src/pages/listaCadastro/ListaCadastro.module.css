@@ -1,0 +1,102 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filterButton {
+    padding: 8px 16px;
+    background-color: #e7e7ff;
+    border: 1px solid #d2d2ff;
+    color: black;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filterButton:hover {
+    background-color: #d0d0ff;
+}
+
+.searchWrapper {
+    position: relative;
+    max-width: 300px;
+    flex: 1;
+}
+
+.searchIcon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 16px;
+    color: #555;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 8px 8px 8px 32px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.addButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #e7e7ff;
+    border: 1px solid #d2d2ff;
+    border-radius: 12px;
+    color: black;
+    font-weight: 500;
+    cursor: pointer;
+    flex-shrink: 0; /* Evita o botão de encolher demais */
+}
+
+.addButton:hover {
+    background-color: #d0d0ff;
+}
+
+.userIcon {
+    font-size: 16px;
+}
+
+.table td button {
+    margin-right: 4px;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px 16px;
+}
+
+.container-box {
+    box-shadow: 8px;
+}
+
+@media (max-width: 768px) {
+    .headerContainer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filterButton,
+    .addButton {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .searchWrapper {
+        max-width: 100%;
+    }
+}
+  
