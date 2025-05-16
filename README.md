@@ -1,54 +1,104 @@
-# React + TypeScript + Vite
+# 💈 SoBarba - Sistema de Agendamento para Barbearias
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Um aplicativo web moderno para gerenciamento de agendamentos em barbearias. Desenvolvido com **React.js**, **TypeScript**, **Bootstrap 5** e **Axios** no Front-End.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+- ⚛️ **React.js** – Biblioteca para criação de interfaces modernas e responsivas
+- 🟦 **TypeScript** – Superset de JavaScript com tipagem estática
+- 🎨 **Bootstrap 5** – Estilização rápida e responsiva com componentes prontos
+- 🔁 **React Router** – Gerenciamento de rotas
+- 📦 **Axios** – Requisições HTTP
+- 📅 **React Datepicker ou Flatpickr** – Para seleção de datas
+- 🗂️ **Context API** – Gerenciamento de estado global
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🧱 **Padrão de Projeto: Flat Modular (ou Clean Architecture para Frontend)**
+
+## ✅ Featureless Clean Architecture (ou "App-level Modular Structure")
+
+### 🧩 Também pode ser chamado de:
+
+- **Flat Modular Structure**
+- **Clean Folder Structure**
+- **Padrão de Projeto Limpo (Clean Pattern) para React**
+- **Minimalist Scalable React Architecture**
+
+
+### 📌 Características desse modelo:
+
+| Característica | Descrição |
+| --- | --- |
+| 📦 **Flat** (sem "features/") | Tudo organizado por tipo de responsabilidade |
+| 🧼 **Clean** | Estrutura limpa, sem nesting excessivo |
+| 🧩 **Modular** | Cada parte (context, hooks, services, etc) tem seu próprio lugar |
+| 🚀 **Escalável** | Cresce bem em projetos pequenos a médios |
+| 🧠 **Didático** | Fácil de entender e aplicar por qualquer dev React |
+
+---
+
+
+## 📁 Estrutura de Pastas
+
+```bash
+src/
+├── assets/            # Ícones, imagens, fontes
+├── components/        # Botões, inputs, modais reutilizáveis
+├── pages/             # Páginas como Login, Agenda, Clientes, Serviços
+├── context/           # Contextos globais (AuthContext, ScheduleContext)
+├── services/          # Comunicação com APIs
+├── hooks/             # Hooks customizados
+├── routes/            # Sistema de rotas
+├── types/             # Interfaces e enums
+├── styles/            # Estilos globais e temas
+│   ├── global.css
+│   └── bootstrap.custom.css
+├── utils/             # Funções utilitárias (ex: formatadores)
+├── App.tsx            # Componente principal
+└── main.tsx           # Ponto de entrada
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📌 Funcionalidades Principais
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- 🧑 Cadastro e login de usuários (barbeiros)
+- 📅 Visualização e criação de agendamentos
+- 🧔 Gerenciamento de clientes
+- ✂️ Controle de serviços e preços
+- 📊 Painel com estatísticas básicas
+- 🔔 Notificações e alertas
+
+---
+
+## ⚙️ Como rodar localmente o projeto
+
+```bash
+# Clone o projeto
+git clone https://github.com/UnoDevs/SoBarba-front-end.git
+
+# Acesse a pasta
+cd SoBarba-front-end
+
+# Instale as dependências
+npm install
+
+# Rode o projeto
+npm run dev
 ```
+
+---
+
+## 📌 Observações
+
+- Este projeto está em constante desenvolvimento.
+- Em breve: integração com APIs de pagamento, relatórios e muitos mais.
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
