@@ -1,0 +1,92 @@
+.container {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  font-family: sans-serif;
+  background: linear-gradient(to bottom, #0A0F3C, #141e86, #1a34c9, #032bf0); /* Degradê vertical */
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 80px; /* Mais espaço à direita */
+}
+
+/* Logo maior */
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 80px;
+  transform: translateY(-50%);
+  width: 600px;  /* Aumentado de 220px para 320px */
+  height: auto;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+/* Painel do Formulário */
+.rightPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px;
+}
+
+/* Formulário maior e mais largo */
+.formContainer {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 60px 100px;  /* <-Mais espaço horizontal para deixar mais retangular */
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px; /* Mais largo, mas sem exagero */
+}
+
+h2 {
+  color: white !important;
+  margin-bottom: 30px;
+  font-size: 30px;
+}
+
+.input {
+  margin: 15px 0;
+  padding: 16px 24px;
+  border-radius: 25px;
+  border: none;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 20px;
+  outline: none;
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.loginButton {
+  margin-top: 30px;
+  padding: 16px 30px;
+  border-radius: 25px;
+  background-color: white;
+  color: #1A237E;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+  font-size: 18px;
+}
+
+.loginButton:hover {
+  background-color: #1A237E;
+  color: white;
+}
+
+.message {
+  margin-top: 20px;
+  color: #FFD700;
+  font-weight: bold;
+  text-align: center;
+}

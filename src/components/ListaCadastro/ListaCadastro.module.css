@@ -1,0 +1,191 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+.containerPrincipal {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px; /* largura do sidebar */
+  margin-top: 70px; /* espaço para o navbar fixo */
+  background-color: #f9fafb;
+}
+
+.header h2 {
+  color: #1e293b !important;
+  font-weight: 700;
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Cabeçalho principal */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* LINHA DE CONTROLES PRINCIPAL: FILTROS À ESQUERDA, BOTÃO À DIREITA */
+.filtros-e-botoes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* ALINHA ITENS À ESQUERDA E DIREITA */
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+  gap: 15px; /* Espaçamento padrão entre os grupos de elementos */
+}
+
+/* NOVO: GRUPO PARA O TEXTO "Filtrar por:" e os dropdowns */
+.grupo-filtros {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaçamento entre o label e os selects, e entre os selects */
+    flex-wrap: wrap; /* Para quebrar os selects em linha se a tela for pequena */
+}
+
+.filtro-label {
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap; /* Evita que o texto quebre linha */
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  min-width: 140px; /* Ajuste a largura mínima conforme o conteúdo */
+}
+
+.filtro-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 50px; /* MAIS ARREDONDADO */
+  padding: 0.5rem 1.5rem 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #374151;
+  width: 100%; /* Ocupa a largura total do select-wrapper */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filtro-select:hover {
+  /* border-color: #a7a7a7; */
+  background-color: #007bff; /* Fundo levemente cinza no hover */
+  color: #ffffff;
+  transition: background-color 0.8s ease-in-out, 0.8s ease-in-out;
+}
+
+.filtro-select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.select-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #6b7280;
+  font-size: 0.7em;
+}
+
+/* Botão Cadastrar Cliente - AGORA COM ESTILO PADRÃO DE VOLTA */
+.addButton {
+  background-color: white; /* FUNDO BRANCO */
+  color: #374151; /* TEXTO CINZA ESCURO */
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #d1d5db; /* BORDA IGUAL AOS SELECTS */
+  border-radius: 50px; /* MAIS ARREDONDADO */
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Sombra igual aos selects */
+  white-space: nowrap; /* Evita que o texto quebre linha */
+}
+
+.addButton:hover {
+  background-color: #007bff; /* Fundo levemente cinza no hover */
+  color: #ffffff;
+  transition: background-color 0.8s ease-in-out, 0.8s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Tabela */
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.table th, .table td {
+  padding: 0.75rem;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+/* Botões de ação na tabela */
+.actionsButtons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .containerPrincipal {
+    margin-left: 0;
+    margin-top: 120px;
+    padding: 1rem;
+  }
+
+  .filtros-e-botoes {
+    flex-direction: column; /* Empilha tudo verticalmente */
+    align-items: stretch; /* Estica os itens para preencher a largura */
+    gap: 10px; /* Espaçamento entre os itens empilhados */
+    justify-content: flex-start; /* Alinha ao topo quando empilhado */
+  }
+
+  .grupo-filtros {
+      flex-direction: column; /* Empilha o label e os selects */
+      align-items: stretch;
+      width: 100%; /* Ocupa a largura total */
+      gap: 10px; /* Espaçamento entre o label e os selects empilhados */
+  }
+
+  .select-wrapper,
+  .addButton {
+    width: 100%; /* Ocupa a largura total em telas menores */
+    max-width: none;
+  }
+
+  .filtro-label {
+      margin-right: 0;
+      margin-bottom: 5px; /* Adiciona um pequeno espaço abaixo do label */
+      text-align: left; /* Alinha o texto do label à esquerda em mobile */
+  }
+}

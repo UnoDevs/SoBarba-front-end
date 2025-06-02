@@ -1,0 +1,65 @@
+.linha-controles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.titulo-barbearia{
+ color: #1e293b;
+ font-weight: 700;
+ font-size: 2.25rem;
+ margin-bottom: 1.5rem;
+ font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Grupo de filtros alinhados à esquerda */
+.filtro-input-barbeiro {
+   padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 28px;
+  font-size: 14px;
+  width: 160px;
+  background-color: #ffffff;
+  color: #374151;
+  transition: border-color 0.3s ease;
+}  
+
+/* Estilo geral para filtros e botão cadastrar */
+
+.cadastrar-barbearia {
+  background-color: white; /* FUNDO BRANCO */
+  color: #374151; /* TEXTO CINZA ESCURO */
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #d1d5db; /* BORDA IGUAL AOS SELECTS */
+  border-radius: 50px; /* MAIS ARREDONDADO */
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Sombra igual aos selects */
+  white-space: nowrap; /* Evita que o texto quebre linha */
+}
+
+.cadastrar-barbearia:hover {
+  background-color: #007bff; /* Fundo levemente cinza no hover */
+  color: #ffffff;
+  transition: background-color 0.8s ease-in-out, 0.8s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.filtro-input {
+  cursor: text;
+}
+
+.filtro-input:focus,
+.filtro-btn:hover,
+.cadastrar-btn:hover {
+  border-color: #aaa;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.cadastrar-btn {
+  white-space: nowrap;
+}
