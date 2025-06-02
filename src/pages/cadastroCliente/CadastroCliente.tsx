@@ -7,26 +7,22 @@ import { clienteService } from "../../services/clienteService";
 function CadastroCliente() {
   const { adicionarUsuario } = useUsuarios();
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    birthDate: "",
     email: "",
     phone: "",
     active: false,
-    document: "",
-    personTypes: "CUSTOMER" as "CUSTOMER" | "EMPLOYEE",
+    cpf: "",
+    tipo: "cliente" as "cliente" | "funcionario", 
   });
-
   const [showModal, setShowModal] = useState(false);
 
   const handleCadastro = () => {
-    if (
-      !formData.name ||
-      !formData.description ||
-      !formData.email ||
-      (formData.personTypes === 'CUSTOMER' && !formData.phone)
-    ) {
+    if (!formData.name || !formData.description || !formData.birthDate || !formData.email || 
+        (formData.tipo === 'cliente' && !formData.phone) || 
+        (formData.tipo === 'funcionario' && !formData.cpf)) {
       alert("Preencha todos os campos obrigatórios.");
       return false;
     }
@@ -44,53 +40,35 @@ function CadastroCliente() {
   };
 
   const handleVoltar = () => {
-    navigate("/");
+    navigate("/"); // Vai voltar para a tela principal
   };
 
   const handleSubmit = async () => {
     const canSubmit = handleCadastro();
-    if (!canSubmit) return;
-
-    // 🔧 Construção do objeto final de envio para a API
-    const payload = {
-      name: formData.name,
-      description: formData.description,
-      email: formData.email,
-      phone: formData.phone,
-      active: formData.active,
-      document: formData.document,
-      personTypes: [formData.personTypes], // ✅ transformado em array
-      ...(formData.personTypes === "EMPLOYEE" && {
-        employeeData: {
-          hireDate: "2025-05-26",
-          terminationDate: "2025-05-26",
-          salary: 1500.0,
-          commission: 8,
-          jobTitle: "BARBER"
-        }
-      })
-    };
+    if (!canSubmit) return; // Não envia os dados se algum campo estiver vazio
 
     try {
-      const response = await clienteService.addCliente(payload);
+      const response = await clienteService.addCliente({
+        ...formData,  // O campo de data já estará no formato correto (yyyy-MM-dd) com o tipo "date"
+      });
+      console.log("Dados enviados para API:", formData);
 
-      console.log("Dados enviados para API:", payload);
       console.log("Usuário cadastrado:", response);
       alert("Usuário cadastrado com sucesso!");
 
-      adicionarUsuario({
-        ...response,
-        personTypes: response.personTypes,  // Não precisa de transformação, já é um único valor
-      });
+      // Adiciona o usuário à lista de usuários (apenas a resposta do backend)
+      adicionarUsuario(response);
 
+      // Limpa o formulário
       setFormData({
         name: "",
         description: "",
+        birthDate: "",
         email: "",
         phone: "",
         active: false,
-        document: "",
-        personTypes: "CUSTOMER",
+        cpf: "",
+        tipo: "cliente", // Inicializando com 'cliente' ou 'funcionario'
       });
 
     } catch (error) {
@@ -99,15 +77,16 @@ function CadastroCliente() {
   };
 
   return (
-    <div className="container mt-4">
+    <div  className="container mt-4">
       <button onClick={handleVoltar}>Voltar</button>
       <h2>Cadastro de Cliente</h2>
-
+      
       <button className="btn btn-primary d-flex align-items-center gap-2" onClick={() => setShowModal(true)}>
         <FaUserPlus />
         Cadastrar Cliente
       </button>
 
+      {/* Modal do Bootstrap */}
       {showModal && (
         <div className="modal show" tabIndex={-1} style={{ display: 'block' }}>
           <div className="modal-dialog">
@@ -117,33 +96,6 @@ function CadastroCliente() {
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
               <div className="modal-body">
-                <div className="mb-3">
-                  <label className="form-label">Tipo:</label>
-                  <div>
-                    <label className="me-2">
-                      <input
-                        type="radio"
-                        name="personTypes"
-                        value="cliente"
-                        checked={formData.personTypes === "CUSTOMER"}
-                        onChange={handleChange}
-                      />
-                      Cliente
-                    </label>
-
-                    <label>
-                      <input
-                        type="radio"
-                        name="personTypes"
-                        value="funcionario"
-                        checked={formData.personTypes === "EMPLOYEE"}
-                        onChange={handleChange}
-                      />
-                      Funcionário
-                    </label>
-                  </div>
-                </div>
-
                 <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                   <input
                     type="text"
@@ -151,14 +103,20 @@ function CadastroCliente() {
                     placeholder="Nome"
                     value={formData.name}
                     onChange={handleChange}
-                    className="form-control mb-2"
                   />
                   <label htmlFor="description">Descrição</label>
                   <input
                     name="description"
-                    className="form-control mb-2"
+                    className="form-control"
                     id="description"
                     value={formData.description}
+                    onChange={handleChange}
+                  ></input>
+                  <input
+                    type="date"
+                    name="birthDate"
+                    placeholder="Data de Nascimento"
+                    value={formData.birthDate}
                     onChange={handleChange}
                   />
                   <input
@@ -167,7 +125,12 @@ function CadastroCliente() {
                     placeholder="E-mail"
                     value={formData.email}
                     onChange={handleChange}
-                    className="form-control mb-2"
+                  />
+                  <input
+                    type="text"
+                    name="cpf"
+                    value={formData.cpf}
+                    onChange={handleChange}
                   />
                   <input
                     type="tel"
@@ -175,26 +138,13 @@ function CadastroCliente() {
                     placeholder="Telefone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="form-control mb-2"
                   />
-                  <div className="form-check mb-2">
-                    <input
-                      type="checkbox"
-                      name="active"
-                      checked={formData.active}
-                      onChange={handleChange}
-                      className="form-check-input"
-                      id="active"
-                    />
-                    <label className="form-check-label" htmlFor="active">Ativo</label>
-                  </div>
+                  <label htmlFor="active">Ativo</label>
                   <input
-                    type="text"
-                    name="document"
-                    placeholder="CPF"
-                    value={formData.document}
+                    type="checkbox"
+                    name="active"
+                    checked={formData.active}
                     onChange={handleChange}
-                    className="form-control mb-2"
                   />
                   <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Fechar</button>

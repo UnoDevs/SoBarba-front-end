@@ -1,15 +1,6 @@
 import { useState, useEffect } from "react";
 import "../ModalServico/ModalServico.css";
-
-interface Servico {
-  id?: string;
-  name: string;
-  price: number;
-  timeConclusion: number;
-  description: string;
-  active: boolean;
-  categoryId: number;
-}
+import { Servico } from "../../types/Servico";
 
 interface ModalServicoProps {
   exibir: boolean;
