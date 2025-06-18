@@ -1,0 +1,169 @@
+.pagina-com-sidebar {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.conteudo-principal {
+  flex-grow: 1;
+  padding: 20px 30px;
+  background-color: #f9fafb;
+  overflow-x: auto;
+}
+
+h2.titulo-servico {
+  color: #1e293b !important;
+  font-weight: 700;
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.filtros-e-botoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.grupo-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  align-items: center;
+}
+
+.filtro-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  max-width: 200px;
+}
+
+.filtro-label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.filtro-input,
+.filtro-select {
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #374151;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.filtro-input:hover,
+.filtro-select:hover {
+  border-color: #a7a7a7;
+}
+
+.filtro-input:focus,
+.filtro-select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.addButton {
+  background-color: white; /* FUNDO BRANCO */
+  color: #374151; /* TEXTO CINZA ESCURO */
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #d1d5db; /* BORDA IGUAL AOS SELECTS */
+  border-radius: 50px; /* MAIS ARREDONDADO */
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Sombra igual aos selects */
+  white-space: nowrap; /* Evita que o texto quebre linha */
+}
+
+.addButton:hover {
+  background-color: #007bff; /* Fundo levemente cinza no hover */
+  color: #ffffff;
+  transition: background-color 0.8s ease-in-out, 0.8s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+table.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Cabeçalho branco puro com !important */
+table.table thead tr {
+  background-color: #ffffff !important; /* fundo branco puro */
+  color: #374151;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: left;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+table.table thead th {
+  padding: 0.8rem 1rem;
+  vertical-align: middle;
+  font-size: 0.95rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+table.table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.15s ease;
+}
+
+table.table tbody tr:hover {
+  background-color: #f3f4f6;
+}
+
+table.table th,
+table.table td {
+  padding: 0.8rem 1rem;
+  vertical-align: middle;
+  font-size: 0.95rem;
+  color: #1e293b;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+  font-size: 1.1rem;
+  color: #4a90e2;
+  transition: color 0.2s;
+}
+
+.icon-button.delete {
+  color: #e02424;
+}
+
+.icon-button:hover {
+  color: #1a61b8;
+}
+
+.icon-button.delete:hover {
+  color: #a71717;
+}
+
+.table thead th {
+  background-color: #f8f9fa; /* cinza claro */
+  /* outras propriedades */
+}

@@ -1,7 +1,10 @@
-// src/types.ts
 export interface Usuario {
     id: number;
-    nome: string;
-    descricao: string;
-    dataNascimento: string;
+    name: string;
+    description: string;
+    email: string;
+    phone: string;
+    active: boolean;
+    document: string;
+    personTypes: ("CUSTOMER" | "EMPLOYEE" | "SUPPLIER" | "OWNER")[];
 }

@@ -4,12 +4,11 @@ interface Usuario {
   id: number;
   name: string;
   description: string;
-  birthDate: string;
   email: string,
   phone: string,
   active: boolean,
-  cpf: string,
-  tipo: "cliente" | "funcionario";
+  document: string,
+  personTypes: ("CUSTOMER" | "EMPLOYEE" | "SUPPLIER" | "OWNER")[];
 }
 
 interface UsuarioContextType {

@@ -1,111 +1,101 @@
-:root {
-    --primary-color: #007bff; /* Azul para o botão Cadastrar */
-    --danger-color: #dc3545; /* Vermelho para o botão Cancelar */
-    --background-color: #f8f9fa;
-    --text-color: #333;
-    --border-radius: 8px;
-  }
-  
-  .modal {
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .modal-dialog {
-    max-width: 500px;
-  }
-  
-  .modal-content {
-    background: var(--background-color);
-    border-radius: var(--border-radius);
-    padding: 20px;
-  }
-  
-  .modal-header {
-    border-bottom: none;
-    font-size: 1.25rem;
-    font-weight: bold;
-  }
-  
-  .modal-body {
-    padding: 15px 0;
-  }
-  
-  .form-label {
-    font-weight: bold;
-    color: var(--text-color);
-  }
-  
-  .form-control {
-    border-radius: var(--border-radius);
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
-  
-  .form-check-input {
-    margin-right: 5px;
-  }
-  
-  .btn-primary {
-    background: var(--primary-color);
-    border: none;
-    padding: 10px 15px;
-    border-radius: var(--border-radius);
-    color: white;
-  }
-  
-  .btn-danger {
-    background: var(--danger-color);
-    border: none;
-    padding: 10px 15px;
-    border-radius: var(--border-radius);
-    color: white;
-  }
-  
-  .btn-primary:hover {
-    background: #0056b3;
-  }
-  
-  .btn-danger:hover {
-    background: #c82333;
-  }
-  
-  .btn-close {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-  }
-  
-  .btn-close:hover {
-    color: var(--danger-color);
-  }
 
-  .btn-cadastrar {
-    background-color: #007bff; /* Azul */
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-cadastrar:hover {
-    background-color: #0056b3;
-  }
-  
-  .btn-cancelar {
-    background-color: #dc3545; /* Vermelho */
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-cancelar:hover {
-    background-color: #a71d2a;
-  }
-  
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+
+.modal-content {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.title-servico {
+  color: #333 !important;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.botoes-modal {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column; /* Um abaixo do outro */
+  gap: 12px; /* Espaço entre eles */
+}
+
+
+
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #565e64;
+}
+
+.modal-content h2 {
+  text-align: center;
+  width: 100%;
+}

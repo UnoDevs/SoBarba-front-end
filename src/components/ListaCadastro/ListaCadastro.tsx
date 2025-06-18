@@ -1,186 +1,249 @@
-import { useUsuarios } from "../UsuarioContent/UsuarioContent";
+import { useUsuarios } from "../../context/UsuarioContext";
 import { useState, useEffect } from "react";
-import ModalCadastro from "../ModalCadastro/Modal"; 
-import axios from "axios";
-import { Usuario } from "../../types/Usuario"; 
+import { useNavigate, useLocation } from "react-router-dom";
+import ModalCadastro from "../ModalCadastro/Modal";
+import { Usuario } from "../../types/Usuario";
 import IconButton from "../IconButton/IconButton";
-import styles from "./ListaCadastro.module.css"; 
+import { clienteService } from "../../services/clienteService";
+import Sidebar from "../Sidebar/Sidebar";
+import Navbar from "../Navbar/Navbar";
+import styles from "./ListaCadastro.module.css";
 
 function ListaCadastro() {
   const { usuarios, setUsuarios } = useUsuarios();
-  const [pesquisa, setPesquisa] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [usuarioEditando, setUsuarioEditando] = useState<Usuario | null>(null); 
+  const [usuarioEditando, setUsuarioEditando] = useState<Usuario | null>(null);
 
-  // Função para editar o usuário ao clicar no lápis
+  // ✅ Ajuste no tipo TipoPessoa para refletir corretamente as opções disponíveis
+  type TipoPessoa = "CUSTOMER" | "EMPLOYEE" | "SUPPLIER" | "OWNER" | "";  
+  const [filtroTipo, setFiltroTipo] = useState<TipoPessoa>("");
+
+  const [filtroStatus, setFiltroStatus] = useState<string>("");
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isModalRoute = location.pathname === "/cadastrar";
+
+  // ✅ Função segura para alterar filtroTipo
+  const handleChangeTipo = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value as TipoPessoa; // Garantindo que o valor seja do tipo TipoPessoa
+    setFiltroTipo(value);
+  };
+
   const editarUsuario = (id: number) => {
-    const usuario = usuarios.find((usuario) => usuario.id === id);
-    console.log(usuario);
+    const usuario = usuarios.find((usuario) => usuario.id === id) as Usuario;
     if (usuario) {
-      setUsuarioEditando(usuario);  // Define o usuário a ser editado
-      setShowModal(true);  // Abre o modal
+      setUsuarioEditando(usuario);
+      navigate("/cadastrar");
     }
   };
 
   const closeModal = () => {
-    setShowModal(false);  // Fecha o modal
-    setUsuarioEditando(null);  // Limpa o usuário editado
+    navigate("/person");
+    setUsuarioEditando(null);
   };
 
-  const addCliente = async (novoCliente: { nome: string; descricao: string; dataNascimento: string }) => {
+  const addCliente = async (novoCliente: Omit<Usuario, "id">) => {
+    const tipos = Array.isArray(novoCliente.personTypes) ? novoCliente.personTypes : [novoCliente.personTypes];
+
+    if (
+      (tipos.includes("EMPLOYEE") || tipos.includes("CUSTOMER")) &&
+      !novoCliente.document
+    ) {
+      alert("O documento é obrigatório para Cliente ou Funcionário.");
+      return;
+    }
+
     try {
-      // Aqui você pode adicionar o código para fazer a requisição para o backend
-      const response = await axios.post("http://localhost:8081/client", novoCliente);      
-      // Adiciona o novo cliente à lista de usuários
-      setUsuarios((prevUsuarios) => [...prevUsuarios, response.data]);
-      
-      alert("Cliente cadastrado com sucesso!");
-      closeModal(); // Fecha o modal após o cadastro
+      const response: Usuario = await clienteService.addCliente(novoCliente);
+      setUsuarios((prev) => [...prev, response]);
+      alert("Cadastro realizado com sucesso!");
+      closeModal();
     } catch (error) {
-      console.error("Erro ao cadastrar o cliente: ", error);
-      alert("Erro ao cadastrar o cliente.");
+      
     }
   };
 
-  // Função para excluir um usuário
   const excluirUsuario = async (id: number) => {
-    const confirmacao = window.confirm("Tem certeza que deseja excluir este cliente?");
-    if (!confirmacao) return;
+    if (!window.confirm("Tem certeza que deseja excluir este cliente?")) return;
 
     try {
-      await axios.delete(`http://localhost:8081/client/${id}`);
-      setUsuarios((prevUsuarios) => prevUsuarios.filter((usuario) => usuario.id !== id));
+      await clienteService.deleteCliente(id);
+      setUsuarios((prev) => prev.filter((usuario) => usuario.id !== id));
       alert("Cliente excluído com sucesso!");
     } catch (error) {
-      console.error("Erro ao excluir o cliente: ", error);
-      alert("Erro ao excluir o cliente.");
+      
     }
   };
-  
+
   const salvarEdicao = async (usuarioAtualizado: Usuario) => {
-    if (usuarioEditando) {
-      const { nome, descricao, dataNascimento } = usuarioEditando; 
+    const tipos = Array.isArray(usuarioAtualizado.personTypes)
+      ? usuarioAtualizado.personTypes
+      : [usuarioAtualizado.personTypes];
 
-      // Verifica se todos os campos estão preenchidos
-      if (!nome || !descricao || !dataNascimento) {
-        alert("Todos os campos são obrigatórios!");
-        return;
-      }       
-        
-        try {
-          const response = await axios.put(`http://localhost:8081/client/${usuarioAtualizado.id}`, usuarioAtualizado);
-
-          console.log("Resposta do backend:", response.data);
-
-          setUsuarios((prevUsuarios) => {
-            return prevUsuarios.map((usuario) =>
-              usuario.id === usuarioAtualizado.id ? usuarioAtualizado : usuario
-            );
-          });
-
-          closeModal();  // Fecha o modal
-
-          alert("Cliente atualizado com sucesso!");
-
-        } catch (error) {
-          console.error("Erro ao editar o cliente: ", error);
-          alert("Erro ao atualizar o cliente.");
-        }      
+    if (
+      !usuarioAtualizado.name ||
+      !usuarioAtualizado.description ||
+      !usuarioAtualizado.email ||
+      (tipos.includes("CUSTOMER") && !usuarioAtualizado.document) ||
+      (tipos.includes("EMPLOYEE") && !usuarioAtualizado.document)
+    ) {
+      alert("Favor preencher os campos obrigatórios!");
+      return;
     }
-  };  
 
-  const usuariosFiltrados = usuarios.filter(usuario =>
-    usuario.nome.toLowerCase().includes(pesquisa.toLowerCase()) // A comparação deve ser case-insensitive
-  );
+    try {
+      const response = await clienteService.updateCliente(
+        usuarioAtualizado.id,
+        usuarioAtualizado
+      );
+      setUsuarios((prev) =>
+        prev.map((usuario) =>
+          usuario.id === usuarioAtualizado.id ? response : usuario
+        )
+      );
+      alert("Cliente atualizado com sucesso!");
+      closeModal();
+    } catch (error) {
+      
+    }
+  };
+
+  const usuariosFiltrados = usuarios.filter((usuario) => {
+    const tipos = Array.isArray(usuario.personTypes) ? usuario.personTypes : [usuario.personTypes];
+    const tipoCorresponde = filtroTipo === "" || tipos.includes(filtroTipo);
+    const statusCorresponde =
+      filtroStatus === "" ||
+      (filtroStatus === "ativo" && usuario.active) ||
+      (filtroStatus === "inativo" && !usuario.active);
+    return tipoCorresponde && statusCorresponde;
+  });
 
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/client");
-        setUsuarios(response.data);
+        const response = await clienteService.getClientes();
+        setUsuarios(response);
       } catch (error) {
-        console.error("Erro ao buscar os usuários: ", error);
-        alert("Erro ao buscar os usuários.");
+       
       }
     };
-  
-    // Chama a função para buscar os dados sempre que a lista de usuários mudar
     fetchUsuarios();
-  }, []);
+  }, [setUsuarios]);
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <h2>Lista de Clientes</h2>
+    <div className={styles.wrapper}>
+      <Sidebar />
+      <Navbar />
 
-      <div >
-        {/* <button onClick={openModal} className={styles.addButton}> */}
-        <button onClick={() => setShowModal(true)} className={styles.addButton}>
-          Cadastrar +
-        </button>
+      <section className={styles.containerPrincipal}>
+        <header className={styles.header}>
+          <h2>Clientes</h2>
+        </header>
 
-        <input
-          type="text"
-          placeholder="Pesquisar..."
-          value={pesquisa}
-          onChange={(e) => setPesquisa(e.target.value)}
-          className={styles.searchInput} // Aplica a classe do input
-        />        
-      </div>
-      <ul>
-        {usuariosFiltrados.length === 0 ? (
-          <table className="table">
+        <div className={styles["filtros-e-botoes"]}>
+          <div className={styles["grupo-filtros"]}>
+            <span className={styles["filtro-label"]}>Filtrar por:</span>
+
+            <div className={styles["select-wrapper"]}>
+              {/* ✅ Alterado para usar handleChangeTipo */}
+              <select
+                className={styles["filtro-select"]}
+                value={filtroTipo}
+                onChange={handleChangeTipo}
+              >
+                <option value="">Tipo</option>
+                <option value="CUSTOMER">Cliente</option>
+                <option value="EMPLOYEE">Funcionário</option>
+                <option value="SUPPLIER">Fornecedor</option>
+                <option value="OWNER">Dono</option>
+              </select>
+              <span className={styles["select-arrow"]}>▼</span>
+            </div>
+
+            <div className={styles["select-wrapper"]}>
+              <select
+                className={styles["filtro-select"]}
+                value={filtroStatus}
+                onChange={(e) => setFiltroStatus(e.target.value)}
+              >
+                <option value="">Status</option>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+              </select>
+              <span className={styles["select-arrow"]}>▼</span>
+            </div>
+          </div>
+
+          <button
+            onClick={() => navigate("/cadastrar")}
+            className={styles.addButton}
+          >
+            + Cadastrar
+          </button>
+        </div>
+
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
             <thead>
               <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Data de Nascimento</th>
-                <th scope="col">Ações</th>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>E-mail</th>
+                <th>Tipo</th>
+                <th>Status</th>
+                <th>Documento</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td colSpan={5}>Nenhum cliente encontrado.</td>
-              </tr>
-            </tbody>
-          </table>
-        ) : (
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Data de Nascimento</th>
-                <th scope="col">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usuariosFiltrados.map((usuario) => (
-                <tr key={usuario.id}>
-                  <td>{usuario.id}</td>
-                  <td>{usuario.nome}</td>
-                  <td>{usuario.descricao}</td>
-                  <td>{usuario.dataNascimento}</td>
-                  <td style={{ padding: "8px", textAlign: "center" }}>
-                    <IconButton onClick={() => editarUsuario(usuario.id)} icon="edit" ariaLabel="Editar usuário" />
-                    <IconButton onClick={() => excluirUsuario(usuario.id)} icon="delete" ariaLabel="Excluir usuário" />
-                  </td>
+              {usuariosFiltrados.length === 0 ? (
+                <tr>
+                  <td colSpan={8}>Nenhum usuário encontrado.</td>
                 </tr>
-              ))}
+              ) : (
+                usuariosFiltrados.map((usuario) => {
+                  const tipos = Array.isArray(usuario.personTypes)
+                    ? usuario.personTypes
+                    : [usuario.personTypes];
+                  return (
+                    <tr key={usuario.id}>
+                      <td>{usuario.id}</td>
+                      <td>{usuario.name}</td>
+                      <td>{usuario.description}</td>
+                      <td>{usuario.email}</td>
+                      <td>{tipos.join(", ")}</td>
+                      <td>{usuario.active ? "Ativo" : "Inativo"}</td>
+                      <td>{usuario.document || "-"}</td>
+                      <td className={styles.actionsButtons}>
+                        <IconButton
+                          onClick={() => editarUsuario(usuario.id)}
+                          icon="edit"
+                          ariaLabel="Editar"
+                        />
+                        <IconButton
+                          onClick={() => excluirUsuario(usuario.id)}
+                          icon="delete"
+                          ariaLabel="Excluir"
+                        />
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
-        )}
-      </ul>
-      {/* Exibir o modal quando showModal for true */}
-      <ModalCadastro 
-        showModal={showModal}
-        closeModal={closeModal} 
-        addCliente={addCliente} 
-        usuarioEditando={usuarioEditando}  // Passando o usuário que está sendo editado
-        setUsuarios={setUsuarios}  // Para atualizar a lista de usuários após a edição
-        salvarEdicao={salvarEdicao}
-      />
+        </div>
+
+        <ModalCadastro
+          showModal={isModalRoute}
+          closeModal={closeModal}
+          addCliente={addCliente}
+          usuarioEditando={usuarioEditando}
+          setUsuarios={setUsuarios}
+          salvarEdicao={salvarEdicao}
+        />
+      </section>
     </div>
   );
 }

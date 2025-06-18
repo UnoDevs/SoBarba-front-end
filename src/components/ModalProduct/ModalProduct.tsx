@@ -1,146 +1,174 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import "../ModalServico/ModalProduct.css";
+import "../ModalProduct/ModalProduct.css";
 
-
-type Produto = {
-  id?: number;
+interface Produto {
+  id: number;
   name: string;
   salePrice: number;
   purchasePrice: number;
-  isActive: boolean;
   hasStock: boolean;
-};
+  active: boolean;
+  categoryId: number;
+}
 
-type ModalProdutoProps = {
-  produtoEditando?: Produto | null;
-  onCadastro: () => void;
-  onClose: () => void;
+interface ModalProdutoProps {
   exibir: boolean;
-};
+  onClose: () => void;
+  onCadastro: () => void;
+  produtoEditando: Produto | null;
+}
 
-function ModalProduto({ produtoEditando, onCadastro, onClose, exibir }: ModalProdutoProps) {
-  const produtoInicial: Produto = {
-    id: undefined,
-    name: "",
-    salePrice: 0,
-    purchasePrice: 0,
-    isActive: false,
-    hasStock: false,
-  };
-
-  const [formData, setFormData] = useState<Produto>(produtoInicial);
+export default function ModalProduto({
+  exibir,
+  onClose,
+  onCadastro,
+  produtoEditando,
+}: ModalProdutoProps) {
+  const [name, setName] = useState("");
+  const [salePrice, setSalePrice] = useState<number>(0);
+  const [purchasePrice, setPurchasePrice] = useState<number>(0);
+  const [hasStock, setHasStock] = useState(false);
+  const [active, setActive] = useState(false);
+  const [categoryId, setCategoryId] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     if (produtoEditando) {
-      setFormData(produtoEditando);
+      setName(produtoEditando.name);
+      setSalePrice(produtoEditando.salePrice ?? 0);
+      setPurchasePrice(produtoEditando.purchasePrice ?? 0);
+      setHasStock(produtoEditando.hasStock);
+      setActive(produtoEditando.active);
+      setCategoryId(produtoEditando.categoryId);
     } else {
-      setFormData(produtoInicial);
+      setName("");
+      setSalePrice(0);
+      setPurchasePrice(0);
+      setHasStock(false);
+      setActive(false);
+      setCategoryId(0);
     }
-  }, [produtoEditando]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : type === "number" ? Number(value) : value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      if (formData.id) {
-        await axios.put(`http://localhost:8081/product/${formData.id}`, formData);
-      } else {
-        await axios.post("http://localhost:8081/product", formData);
-      }
-      setFormData(produtoInicial);
-      onCadastro();
-    } catch (error) {
-      console.error("Erro ao salvar produto", error);
-    }
-  };
+    setErrorMsg("");
+  }, [produtoEditando, exibir]);
 
   if (!exibir) return null;
 
+  const handleSalvar = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMsg("");
+
+    const produtoPayload = {
+      name,
+      salePrice,
+      purchasePrice,
+      hasStock,
+      active,
+      categoryId,
+    };
+
+    try {
+      if (produtoEditando) {
+        await axios.put(
+          `http://localhost:8081/product/${produtoEditando.id}`,
+          produtoPayload
+        );
+      } else {
+        await axios.post("http://localhost:8081/product", produtoPayload);
+      }
+      onCadastro();
+    } catch (error) {
+      setErrorMsg("Erro ao salvar o produto. Tente novamente.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="modal fade show d-block" tabIndex={-1} style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">{formData.id ? "Editar Produto" : "Cadastro de Produto"}</h5>
-            <button type="button" className="btn-close" onClick={onClose}></button>
-          </div>
-          <div className="modal-body">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">Nome</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="salePrice" className="form-label">Preço (R$)</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="salePrice"
-                  name="salePrice"
-                  value={formData.salePrice}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="purchasePrice" className="form-label">Custo (R$)</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="purchasePrice"
-                  name="purchasePrice"
-                  value={formData.purchasePrice}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3 form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="hasStock"
-                  name="hasStock"
-                  checked={formData.hasStock}
-                  onChange={handleChange}
-                />
-                <label className="form-check-label" htmlFor="hasStock">Disponível em Estoque</label>
-              </div>
-              <div className="mb-3 form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="isActive"
-                  name="isActive"
-                  checked={formData.isActive}
-                  onChange={handleChange}
-                />
-                <label className="form-check-label" htmlFor="isActive">Ativo</label>
-              </div>
-              <button type="submit" className="btn btn-primary">Salvar</button>
-              <button type="button" className="btn btn-secondary ms-2" onClick={onClose}>Cancelar</button>
-            </form>
-          </div>
+    <div className="modal-fundo">
+      <div className="modal-conteudo">
+        <div className="modal-header">
+          <h2>{produtoEditando ? "Editar Produto" : "Cadastrar Produto"}</h2>
         </div>
+
+        <form onSubmit={handleSalvar}>
+          <label htmlFor="name">Nome</label>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nome"
+            required
+          />
+
+          <label htmlFor="salePrice">Preço de venda</label>
+          <input
+            id="salePrice"
+            type="number"
+            value={salePrice}
+            onChange={(e) => setSalePrice(Number(e.target.value))}
+            placeholder="Preço de venda"
+            required
+            step="0.01"
+            min="0"
+          />
+
+          <label htmlFor="purchasePrice">Preço de custo</label>
+          <input
+            id="purchasePrice"
+            type="number"
+            value={purchasePrice}
+            onChange={(e) => setPurchasePrice(Number(e.target.value))}
+            placeholder="Preço de custo"
+            required
+            step="0.01"
+            min="0"
+          />
+
+          <label>
+            <input
+              type="checkbox"
+              checked={hasStock}
+              onChange={() => setHasStock(!hasStock)}
+            />
+            Tem estoque?
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              checked={active}
+              onChange={() => setActive(!active)}
+            />
+            Ativo
+          </label>
+
+          <label htmlFor="categoryId">Categoria (ID)</label>
+          <input
+            id="categoryId"
+            type="number"
+            value={categoryId}
+            onChange={(e) => setCategoryId(Number(e.target.value))}
+            placeholder="ID da Categoria"
+            required
+          />
+
+          {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+
+          <div className="modal-footer">
+            <button type="submit" disabled={loading}>
+              {loading ? "Salvando..." : "Salvar"}
+            </button>
+            <button type="button" onClick={onClose} disabled={loading}>
+              Cancelar
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
 }
-
-export default ModalProduto;
-

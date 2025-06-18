@@ -1,120 +1,194 @@
-/* Modal Overlay */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.wrapper {
+  display: flex;
+  height: 100vh;
 }
 
-/* Modal Content */
-.modalContent {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    max-width: 600px; /* Largura máxima */
-    width: 80%; /* Largura relativa, para ficar proporcional à tela */
-    max-height: 80%; /* Para limitar a altura máxima */
-    overflow-y: auto; /* Caso o conteúdo ultrapasse a altura máxima */
+.containerPrincipal {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px; /* largura do sidebar */
+  margin-top: 70px; /* espaço para o navbar fixo */
+  background-color: #f9fafb;
 }
 
-/* Título do Modal */
-.modalTitle {
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    text-align: center;
+.header h2 {
+  color: #1e293b !important;
+  font-weight: 700;
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: -10px;  /* move para a direita */
+  margin-top: -10px;   /* move para baixo */
 }
 
-/* Corpo do Modal (Formulário) */
-.modalBody {
-    display: flex;
-    flex-direction: column; /* Coloca os itens em uma coluna */
-    gap: 15px; /* Adiciona espaçamento entre os elementos */
-    margin-bottom: 20px; /* Espaço extra abaixo do formulário */
-    width: 100%; /* Garante que o formulário ocupe toda a largura disponível */
+
+/* Cabeçalho principal */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
-/* Estilo dos Inputs */
-.modalInput {
-    padding: 10px;
-    margin: 0 auto;
-    width: 100%; /* Garante que o input ocupe toda a largura disponível */
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* LINHA DE CONTROLES PRINCIPAL: FILTROS À ESQUERDA, BOTÃO À DIREITA */
+.filtros-e-botoes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* ALINHA ITENS À ESQUERDA E DIREITA */
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+  gap: 15px; /* Espaçamento padrão entre os grupos de elementos */
 }
 
-/* Botão de Enviar */
-.modalButton {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%; /* Garante que o botão tenha a mesma largura do input */
-}
-
-/* Efeito de Hover no Botão de Enviar */
-.modalButton:hover {
-    background-color: #45a049;
-}
-
-/* Botão de Fechar */
-.closeButton {
-    padding: 10px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px; /* Espaçamento para o botão de fechar */
-    width: 100%; /* Garante que o botão tenha a mesma largura do input */
-}
-
-/* Efeito de Hover no Botão de Fechar */
-.closeButton:hover {
-    background-color: #da190b;
-}
-
-/* Contêiner do input e botão */
-.searchContainer {
+/* NOVO: GRUPO PARA O TEXTO "Filtrar por:" e os dropdowns */
+.grupo-filtros {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza os itens */
-    width: 35%; /* Reduz a largura total */
-    margin: 0 auto 10px; /* Centraliza horizontalmente */
+    gap: 10px; /* Espaçamento entre o label e os selects, e entre os selects */
+    flex-wrap: wrap; /* Para quebrar os selects em linha se a tela for pequena */
 }
 
-/* Input de pesquisa */
-.searchInput {
-    width: 20%; /* Ocupa 70% do container */
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px; /* Arredonda apenas à esquerda */
-    outline: none;
+.filtro-label {
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap; /* Evita que o texto quebre linha */
 }
 
-/* Botão Cadastrar */
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  min-width: 140px; /* Ajuste a largura mínima conforme o conteúdo */
+}
+
+.filtro-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 50px; /* MAIS ARREDONDADO */
+  padding: 0.5rem 1.5rem 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #374151;
+  width: 100%; /* Ocupa a largura total do select-wrapper */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filtro-select:hover {
+  /* border-color: #a7a7a7; */
+  background-color: #007bff; /* Fundo levemente cinza no hover */
+  color: #ffffff;
+  transition: background-color 0.8s ease-in-out, 0.8s ease-in-out;
+}
+
+.filtro-select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.select-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #6b7280;
+  font-size: 0.7em;
+}
+
+/* Botão Cadastrar Cliente - AGORA COM ESTILO PADRÃO DE VOLTA */
 .addButton {
-    position: absolute;
-    top: 7.2%;  
-    right: 34.30%; 
-    width: auto; 
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: 1px solid #007bff;
-    border-radius: 0 4px 4px 0; /* Arredonda apenas à direita */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: white; /* FUNDO BRANCO */
+  color: #374151; /* TEXTO CINZA ESCURO */
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #d1d5db; /* BORDA IGUAL AOS SELECTS */
+  border-radius: 50px; /* MAIS ARREDONDADO */
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Sombra igual aos selects */
+  white-space: nowrap; /* Evita que o texto quebre linha */
 }
 
-/* Hover no botão */
 .addButton:hover {
-    background-color: #0056b3;
+  background-color: #007bff; /* Fundo levemente cinza no hover */
+  color: #ffffff;
+  transition: background-color 0.8s ease-in-out, 0.8s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Tabela */
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.table th, .table td {
+  padding: 0.75rem;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+/* Botões de ação na tabela */
+.actionsButtons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .containerPrincipal {
+    margin-left: 0;
+    margin-top: 120px;
+    padding: 1rem;
+  }
+
+  .filtros-e-botoes {
+    flex-direction: column; /* Empilha tudo verticalmente */
+    align-items: stretch; /* Estica os itens para preencher a largura */
+    gap: 10px; /* Espaçamento entre os itens empilhados */
+    justify-content: flex-start; /* Alinha ao topo quando empilhado */
+  }
+
+  .grupo-filtros {
+      flex-direction: column; /* Empilha o label e os selects */
+      align-items: stretch;
+      width: 100%; /* Ocupa a largura total */
+      gap: 10px; /* Espaçamento entre o label e os selects empilhados */
+  }
+
+  .select-wrapper,
+  .addButton {
+    width: 100%; /* Ocupa a largura total em telas menores */
+    max-width: none;
+  }
+
+  .filtro-label {
+      margin-right: 0;
+      margin-bottom: 5px; /* Adiciona um pequeno espaço abaixo do label */
+      text-align: left; /* Alinha o texto do label à esquerda em mobile */
+  }
 }

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import "../ModalServico/ModalServico.css";
 
 interface Servico {
@@ -8,130 +7,159 @@ interface Servico {
   price: number;
   timeConclusion: number;
   description: string;
-  isActive: boolean;
+  active: boolean;
+  categoryId: number;
 }
 
-interface CadastroServicoProps {
-  servicoEditando?: Servico | null;
-  onCadastro: () => void;
-  onClose: () => void;
+interface ModalServicoProps {
   exibir: boolean;
+  servicoEditando: Servico | null;
+  onClose: () => void;
+  onCadastro: () => void;
 }
 
-function CadastroServico({ servicoEditando, onCadastro, onClose, exibir }: CadastroServicoProps) {
-  const servicoInicial: Servico = { name: "", price: 0, timeConclusion: 0, description: "", isActive: false };
-  
-  const [formData, setFormData] = useState<Servico>(servicoInicial);
+function ModalServico({ exibir, servicoEditando, onClose, onCadastro }: ModalServicoProps) {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState<number>(0);
+  const [timeConclusion, setTimeConclusion] = useState<number>(0);
+  const [description, setDescription] = useState("");
+  const [active, setActive] = useState(false);  // Inicia como false
+  const [categoryId, setCategoryId] = useState<number>(0); 
 
   useEffect(() => {
     if (servicoEditando) {
-      setFormData(servicoEditando);
+      setName(servicoEditando.name);
+      setPrice(servicoEditando.price);
+      setTimeConclusion(servicoEditando.timeConclusion);
+      setDescription(servicoEditando.description);
+      setActive(servicoEditando.active);
+      setCategoryId(servicoEditando.categoryId);
     } else {
-      setFormData(servicoInicial);
+      // limpa formulário para novo cadastro
+      setName("");
+      setPrice(0);
+      setTimeConclusion(0);
+      setDescription("");
+      setActive(false);  // Checkbox inicia desmarcado no cadastro novo
+      setCategoryId(0);
     }
-  }, [servicoEditando]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : type === "number" ? Number(value) : value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      if (formData.id) {
-        await axios.put(`http://localhost:8081/task/${formData.id}`, formData);
-      } else {
-        await axios.post("http://localhost:8081/task", formData);
-      }
-      setFormData(servicoInicial); // Reseta o formulário após o cadastro
-      onCadastro();
-    } catch (error) {
-      console.error("Erro ao salvar serviço", error);
-    }
-  };
+  }, [servicoEditando, exibir]);
 
   if (!exibir) return null;
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const servico = {
+      name,
+      price,
+      timeConclusion,
+      description,
+      active,
+      categoryId
+    };
+
+    try {
+      if (servicoEditando && servicoEditando.id) {
+        // editar serviço
+       await fetch(`http://localhost:8081/task/${servicoEditando.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(servico),
+    });
+      } else {
+        // novo serviço
+        await fetch("http://localhost:8081/task", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(servico),
+        });
+      }
+      onCadastro();
+    } catch (error) {
+      console.error("Erro ao salvar serviço", error);
+      alert("Erro ao salvar serviço");
+    }
+  };
+
   return (
-    <div className="modal fade show d-block" tabIndex={-1}>
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">{formData.id ? "Editar Serviço" : "Cadastro de Serviço"}</h5>
-            <button type="button" className="btn-close" onClick={onClose}></button>
+    <div className="modal-background" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <h2 className="title-servico">{servicoEditando ? "Editar Serviço" : "Cadastrar Serviço"}</h2>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Nome</label>
+            <input
+              type="text"
+              value={name}
+              required
+              onChange={(e) => setName(e.target.value)}
+              className="form-control"
+            />
           </div>
-          <div className="modal-body">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label className="form-label">nome do Serviço</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  placeholder="Digite o nome do serviço"
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Preço (R$)</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleChange}
-                  required
-                  placeholder="Digite o preço do serviço"
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Tempo (min)</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  name="timeConclusion"
-                  value={formData.timeConclusion}
-                  onChange={handleChange}
-                  required
-                  placeholder="Digite o timeConclusion estimado (em minutos)"
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Descrição</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  required
-                  placeholder="Descreva o serviço"
-                />
-              </div>
-              <div className="form-check mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  name="isActive"
-                  checked={formData.isActive}
-                  onChange={handleChange}
-                />
-                <label className="form-check-label">Ativo</label>
-              </div>
-              <button type="submit" className="btn btn-cadastrar">Cadastrar</button>
-              <button type="button" className="btn btn-cancelar ms-2" onClick={onClose}>Cancelar</button>
-            </form>
+          <div className="form-group">
+            <label>Preço (R$)</label>
+            <input
+              type="number"
+              step="0.01"
+              value={price}
+              required
+              onChange={(e) => setPrice(parseFloat(e.target.value))}
+              className="form-control"
+            />
           </div>
-        </div>
+          <div className="form-group">
+            <label>Tempo de Conclusão (min)</label>
+            <input
+              type="number"
+              value={timeConclusion}
+              required
+              onChange={(e) => setTimeConclusion(parseInt(e.target.value))}
+              className="form-control"
+            />
+          </div>
+          <div className="form-group">
+            <label>Descrição</label>
+            <textarea
+              value={description}
+              required
+              onChange={(e) => setDescription(e.target.value)}
+              className="form-control"
+            />
+          </div>
+          <div className="form-group">
+            <label>Categoria ID</label>
+            <input
+              type="number"
+              value={categoryId}
+              required
+              onChange={(e) => setCategoryId(parseInt(e.target.value))}
+              className="form-control"
+            />
+          </div>
+          <div className="form-group checkbox-group">
+            <label>
+              <input
+                type="checkbox"
+                checked={active}
+                onChange={() => setActive(!active)}
+              />
+              Ativo
+            </label>
+          </div>
+          <div className="botoes-modal">
+            <button type="submit" className="btn btn-primary">
+              {servicoEditando ? "Salvar" : "Cadastrar"}
+            </button>
+            <button type="button" className="btn btn-secondary" onClick={onClose}>
+              Cancelar
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
 }
 
-export default CadastroServico;
+export default ModalServico;

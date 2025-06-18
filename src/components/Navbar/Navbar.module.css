@@ -1,0 +1,11 @@
+.navbar-custom {
+  /* background-color: #007bff - AZUL */
+  /* background-color: #7374e8; - ROXO */
+  background-color: #007bff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1100;
+}
+

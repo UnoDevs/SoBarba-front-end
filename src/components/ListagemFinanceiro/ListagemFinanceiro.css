@@ -1,0 +1,289 @@
+.container-financeiro {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background-color: #f9fafb;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px; /* espaço para Sidebar */
+  padding-top: 80px;  /* espaço para Navbar */
+}
+
+.financeiro-content {
+  padding: 20px;
+}
+
+.titulo-financeiro {
+  color: #1e293b !important;
+  font-weight: 700;
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 20px;  /* move para a direita */
+  margin-top: 10px;   /* move para baixo */
+}
+
+/* Container flex para filtros e botão na mesma linha */
+.financeiro-filtros-acoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* para responsividade */
+  gap: 10px;
+}
+
+/* Contêiner dos selects */
+.bnt-filtros {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.9rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Estilo dos selects de filtro */
+.filtro-btn {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 5px 12px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 14px;
+  min-width: 120px;
+  transition: border-color 0.3s ease;
+}
+
+.filtro-btn:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 6px #007bffaa;
+}
+
+/* Contêiner do botão */
+.acoes {
+  display: flex;
+  align-items: center;
+}
+
+/* Botão cadastrar financeiro */
+.btn-cadastrar {
+  background-color: white;
+  color: #374151;
+  margin-top: -30px;  /* sobe o botão */
+  padding: 10px 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+}
+
+.btn-cadastrar:hover {
+  background-color: #007bff;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.5);
+}
+
+/* Tabela */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+  text-align: center;
+  padding: 12px;
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+  text-align: center;
+  
+}
+
+/* Tipo receita ou despesa */
+.receita {
+  color: green !important;
+  font-weight: bold;
+}
+
+.despesa {
+  color: red !important;
+  font-weight: bold;
+}
+
+/* Status */
+.status {
+  padding: 2px 10px;
+  border-radius: 15px;
+  border: 1px solid;
+  font-size: 12px;
+  display: inline-block;
+  min-width: 70px;
+  text-align: center;
+}
+
+.status.pago {
+  border-color: green;
+  color: green;
+}
+
+.status.recebido {
+  border-color: teal;
+  color: teal;
+}
+
+.status.pendente {
+  border-color: purple;
+  color: purple;
+}
+
+.filtros {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 4px;
+  
+}
+
+
+
+.filtro-input {
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 28px;
+  font-size: 14px;
+  width: 160px;
+  background-color: #ffffff;
+  transition: border-color 0.3s ease;
+  padding: 4px;
+}
+
+.filtro-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.acoes-botoes {
+  display: flex;
+  gap: 12px; /* espaço entre os botões */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Botões editar e excluir */
+.editar-btn, .excluir-btn {
+  width: 40px;
+  height: 40px;
+  background-color: white;  /* fundo branco */
+  border: 2px solid white;  /* borda branca */
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Ícones maiores e destacados */
+.editar-btn svg, .excluir-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Efeito de hover */
+.editar-btn:hover, .excluir-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Editar - ícone azul */
+.editar-btn svg {
+  color: #3b82f6; /* azul padrão */
+}
+
+/* Excluir - ícone vermelho */
+.excluir-btn svg {
+  color: #ef4444; /* vermelho padrão */
+}
+
+/* Excluir - ícone vermelho preenchido */
+.excluir-btn svg path,
+.excluir-btn svg circle,
+.excluir-btn svg rect,
+.excluir-btn svg polygon {
+  fill: #ef4444 !important;
+  stroke: none !important;
+}
+
+.acoes-botoes {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  padding: 0;
+}
+
+.icon-button svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Ícone editar - lápis azul */
+.icon-button.edit svg {
+  color: #3b82f6; /* azul */
+}
+
+/* Ícone excluir - lixo vermelho */
+.icon-button.delete svg {
+  color: #ef4444; /* vermelho */
+}
+
+/* Para garantir preenchimento vermelho nos ícones, se houver */
+.icon-button.delete svg path,
+.icon-button.delete svg circle,
+.icon-button.delete svg rect,
+.icon-button.delete svg polygon {
+  fill: #ef4444 !important;
+  stroke: none !important;
+}
+
+/* Efeito hover simples */
+.icon-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+

@@ -1,28 +1,46 @@
 import { useState } from 'react';
-import axios from "axios";
-import { useUsuarios } from "../UsuarioContent/UsuarioContent";
+import { useUsuarios } from "../../context/UsuarioContext";
 import { useNavigate } from "react-router-dom";
+import { FaUserPlus } from "react-icons/fa";
+import { clienteService } from "../../services/clienteService";
 
 function CadastroCliente() {
   const { adicionarUsuario } = useUsuarios();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    nome: "",
-    descricao: "",
-    dataNascimento: "",
+    name: "",
+    description: "",
+    email: "",
+    phone: "",
+    active: false,
+    document: "",
+    personTypes: "CUSTOMER" as "CUSTOMER" | "EMPLOYEE",
   });
+
   const [showModal, setShowModal] = useState(false);
 
   const handleCadastro = () => {
-    if(!formData.nome || !formData.descricao || !formData.dataNascimento) {
-      alert("Preencha todos os campos.");
+    if (
+      !formData.name ||
+      !formData.description ||
+      !formData.email ||
+      (formData.personTypes === 'CUSTOMER' && !formData.phone)
+    ) {
+      alert("Preencha todos os campos obrigatórios.");
       return false;
     }
-    return true; 
+    return true;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const target = e.target as HTMLInputElement;
+    const { name, type, value, checked } = target;
+
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const handleVoltar = () => {
@@ -31,26 +49,48 @@ function CadastroCliente() {
 
   const handleSubmit = async () => {
     const canSubmit = handleCadastro();
-    if (!canSubmit) return; // Não envia os dados se algum campo estiver vazio
+    if (!canSubmit) return;
+
+    // 🔧 Construção do objeto final de envio para a API
+    const payload = {
+      name: formData.name,
+      description: formData.description,
+      email: formData.email,
+      phone: formData.phone,
+      active: formData.active,
+      document: formData.document,
+      personTypes: formData.personTypes,  // Aqui não precisa mais ser um array
+      ...(formData.personTypes === "EMPLOYEE" && {
+        employeeData: {
+          hireDate: "2025-05-26",       // ou dinamicamente via Date()
+          terminationDate: "2025-05-26",
+          salary: 1500.0,
+          commission: 8,
+          jobTitle: "BARBER"
+        }
+      })
+    };
 
     try {
-      const response = await axios.post("http://localhost:8081/client", {
-        ...formData,  // O campo de data já estará no formato correto (yyyy-MM-dd) com o tipo "date"
-      }, {
-        headers: { "Content-Type": "application/json" }
-      });
+      const response = await clienteService.addCliente(payload);
 
-      console.log("Usuário cadastrado:", response.data);
+      console.log("Dados enviados para API:", payload);
+      console.log("Usuário cadastrado:", response);
       alert("Usuário cadastrado com sucesso!");
 
-      // Adiciona o usuário à lista de usuários (apenas a resposta do backend)
-      adicionarUsuario(response.data);
+      adicionarUsuario({
+        ...response,
+        personTypes: response.personTypes,  // Não precisa de transformação, já é um único valor
+      });
 
-      // Limpa o formulário
       setFormData({
-        nome: "",
-        descricao: "",
-        dataNascimento: "",
+        name: "",
+        description: "",
+        email: "",
+        phone: "",
+        active: false,
+        document: "",
+        personTypes: "CUSTOMER",
       });
 
     } catch (error) {
@@ -59,12 +99,15 @@ function CadastroCliente() {
   };
 
   return (
-    <div>
+    <div className="container mt-4">
       <button onClick={handleVoltar}>Voltar</button>
       <h2>Cadastro de Cliente</h2>
-      {/* Botão para abrir o Modal */}
-      <button onClick={() => setShowModal(true)}>Cadastrar Cliente</button>
-      {/* Modal do Bootstrap */}
+
+      <button className="btn btn-primary d-flex align-items-center gap-2" onClick={() => setShowModal(true)}>
+        <FaUserPlus />
+        Cadastrar Cliente
+      </button>
+
       {showModal && (
         <div className="modal show" tabIndex={-1} style={{ display: 'block' }}>
           <div className="modal-dialog">
@@ -74,28 +117,84 @@ function CadastroCliente() {
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
               <div className="modal-body">
+                <div className="mb-3">
+                  <label className="form-label">Tipo:</label>
+                  <div>
+                    <label className="me-2">
+                      <input
+                        type="radio"
+                        name="personTypes"
+                        value="cliente"
+                        checked={formData.personTypes === "CUSTOMER"}
+                        onChange={handleChange}
+                      />
+                      Cliente
+                    </label>
+
+                    <label>
+                      <input
+                        type="radio"
+                        name="personTypes"
+                        value="funcionario"
+                        checked={formData.personTypes === "EMPLOYEE"}
+                        onChange={handleChange}
+                      />
+                      Funcionário
+                    </label>
+                  </div>
+                </div>
+
                 <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                   <input
                     type="text"
-                    name="nome"
+                    name="name"
                     placeholder="Nome"
-                    value={formData.nome}
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="form-control mb-2"
+                  />
+                  <label htmlFor="description">Descrição</label>
+                  <input
+                    name="description"
+                    className="form-control mb-2"
+                    id="description"
+                    value={formData.description}
                     onChange={handleChange}
                   />
-                  <label htmlFor="descricao">Descrição</label>
-                  <textarea
-                    className="form-control"
-                    id="descricao"
-                    rows={3}
-                    value={formData.descricao}
-                    onChange={handleChange}
-                  ></textarea>
                   <input
-                    type="date"
-                    name="dataNascimento"
-                    placeholder="Data de Nascimento"
-                    value={formData.dataNascimento}
+                    type="email"
+                    name="email"
+                    placeholder="E-mail"
+                    value={formData.email}
                     onChange={handleChange}
+                    className="form-control mb-2"
+                  />
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Telefone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="form-control mb-2"
+                  />
+                  <div className="form-check mb-2">
+                    <input
+                      type="checkbox"
+                      name="active"
+                      checked={formData.active}
+                      onChange={handleChange}
+                      className="form-check-input"
+                      id="active"
+                    />
+                    <label className="form-check-label" htmlFor="active">Ativo</label>
+                  </div>
+                  <input
+                    type="text"
+                    name="document"
+                    placeholder="CPF"
+                    value={formData.document}
+                    onChange={handleChange}
+                    className="form-control mb-2"
                   />
                   <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Fechar</button>
