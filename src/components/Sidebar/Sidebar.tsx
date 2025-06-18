@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Sidebar.module.css";
 import logo from "../../assets/logo-sFundo.png";
 import { NavLink } from "react-router-dom";
-import { BarChart2, Scissors, User, ShoppingBag, Store, Tags } from "lucide-react";
+import { BarChart2, Scissors, User, ShoppingBag, Store, Tags, DollarSign } from "lucide-react";
 
 const Sidebar: React.FC = () => {
   return (
@@ -21,6 +21,16 @@ const Sidebar: React.FC = () => {
             >
               <BarChart2 className={styles.icon} />
               <span>Dashboard</span>
+            </NavLink>
+          </li>
+          <li className={styles.navItem}>
+            <NavLink 
+              to="/financeiro" 
+              className={({ isActive }) => isActive ? styles.activeLink : undefined }
+              end
+            >
+              <DollarSign className={styles.icon} />
+              <span>Financeiro</span>
             </NavLink>
           </li>
           <li className={styles.navItem}>

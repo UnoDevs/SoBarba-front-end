@@ -74,7 +74,7 @@
 }
   
 .closeButton {
-    background-color: #565e64;
+    background-color: #f44336;
     color: white;
     padding: 0.75rem;
     border: none;
@@ -86,7 +86,7 @@
 }
   
 .closeButton:hover {
-    background-color: #565e64;
+    background-color: #e53935;
 }
   
 /* Animação */

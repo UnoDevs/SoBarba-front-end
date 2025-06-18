@@ -86,7 +86,8 @@ const ModalCadastro: React.FC<ModalProps> = ({
         await addCliente(novoCliente);
       }
     } catch (error) {
-      
+      console.error('Erro ao cadastrar cliente: ', error);
+      alert('Erro ao cadastrar cliente.');
     }
 
     closeAndClearModal();
