@@ -92,7 +92,6 @@ export default function ModalProduto({
       <div className="modal-conteudo">
         <div className="modal-header">
           <h2>{produtoEditando ? "Editar Produto" : "Cadastrar Produto"}</h2>
-          <button className="fechar-modal" onClick={onClose}>X</button>
         </div>
 
         <form onSubmit={handleSalvar}>

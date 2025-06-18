@@ -75,7 +75,7 @@ function ModalBarbershop({
             <h2 className="modal-title" style={{ color: "#000000" }}>
               {barbearia.id ? "Editar Barbearia" : "Cadastrar Barbearia"}
             </h2>
-            <button type="button" className="btn-close" onClick={onClose}></button>
+            
           </div>
           <form onSubmit={handleSubmit}>
             <div className="modal-body">

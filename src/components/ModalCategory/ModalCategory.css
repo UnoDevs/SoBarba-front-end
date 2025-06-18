@@ -107,3 +107,49 @@
   cursor: not-allowed;
 }
 
+.modal-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-footer button {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-footer button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.modal-footer button[type="submit"]:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.modal-footer button[type="button"] {
+  background-color: #6c757d;
+  color: white;
+}
+
+.modal-footer button[type="button"]:hover:not(:disabled) {
+  background-color: #565e64;
+}
+
+.modal-footer button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal-header{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}

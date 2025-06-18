@@ -73,7 +73,7 @@ export default function ListagemCategory() {
 
         <div className="linha-controles">
           <button className="btn btn-outline-dark cadastrar-btn" onClick={abrirModalCadastro}>
-            + Nova Categoria
+            + Cadastrar
           </button>
         </div>
 

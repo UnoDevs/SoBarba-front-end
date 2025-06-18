@@ -59,8 +59,7 @@ function ListaCadastro() {
       alert("Cadastro realizado com sucesso!");
       closeModal();
     } catch (error) {
-      console.error("Erro ao cadastrar: ", error);
-      alert("Erro ao cadastrar.");
+      
     }
   };
 
@@ -72,8 +71,7 @@ function ListaCadastro() {
       setUsuarios((prev) => prev.filter((usuario) => usuario.id !== id));
       alert("Cliente excluído com sucesso!");
     } catch (error) {
-      console.error("Erro ao excluir o cliente: ", error);
-      alert("Erro ao excluir o cliente.");
+      
     }
   };
 
@@ -106,8 +104,7 @@ function ListaCadastro() {
       alert("Cliente atualizado com sucesso!");
       closeModal();
     } catch (error) {
-      console.error("Erro ao editar o cliente: ", error);
-      alert("Erro ao atualizar o cliente.");
+      
     }
   };
 
@@ -127,8 +124,7 @@ function ListaCadastro() {
         const response = await clienteService.getClientes();
         setUsuarios(response);
       } catch (error) {
-        console.error("Erro ao buscar os usuários: ", error);
-        alert("Erro ao buscar os usuários.");
+       
       }
     };
     fetchUsuarios();
@@ -182,7 +178,7 @@ function ListaCadastro() {
             onClick={() => navigate("/cadastrar")}
             className={styles.addButton}
           >
-            + Cadastrar Cliente
+            + Cadastrar
           </button>
         </div>
 

@@ -122,7 +122,7 @@ function ListagemProduct() {
             className="btn-filtro btn-cadastrar"
             onClick={() => setExibirCadastro(true)}
           >
-            + Cadastrar Produto
+            + Cadastrar
           </button>
         </div>
 

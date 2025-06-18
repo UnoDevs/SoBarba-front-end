@@ -19,7 +19,10 @@
   font-size: 2.25rem;
   margin-bottom: 1.5rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: -10px;  /* move para a direita */
+  margin-top: -10px;   /* move para baixo */
 }
+
 
 /* Cabeçalho principal */
 .header {

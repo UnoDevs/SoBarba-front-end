@@ -172,7 +172,7 @@ function ListaServicos() {
               setExibirCadastro(true);
             }}
           >            
-            + Cadastrar Serviço
+            + Cadastrar
           </button>
         </div>
 

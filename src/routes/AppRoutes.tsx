@@ -8,6 +8,7 @@ import Dashboard from "@/components/Dashboard/Dashboard";
 import ListagemCaterory from "../components/ListagemCategory/ListagemCategory";
 import Login from "@/components/Login/Login";
 import TopNavbar from "@/components/Navbar/Navbar";
+import ListagemFinanceiro from "@/components/ListagemFinanceiro/ListagemFinanceiro";
 
 function AppRoutes() {
   // Custom hook para pegar localização dentro do Router
@@ -31,6 +32,7 @@ function AppRoutes() {
           <Route path="/product" element={<ListagemProduct />} />
           <Route path="/task" element={<TelaListagem />} />
           <Route path="/category" element={<ListagemCaterory />} />
+          <Route path="/financeiro" element={<ListagemFinanceiro />} />
         </Routes>
       </>
     );

@@ -140,10 +140,9 @@
 }
 
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .modal-close {
@@ -165,3 +164,9 @@
   margin-top: 20px;
   justify-content: center;
 }
+
+.modal-header h2 {
+  text-align: center;
+  width: 100%;
+}
+

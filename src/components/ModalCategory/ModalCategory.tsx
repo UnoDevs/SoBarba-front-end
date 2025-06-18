@@ -76,7 +76,6 @@ export default function ModalCategory({
             <h2 className="modal-title" style={{ color: "#000000" }}>
               {categoryEditando ? "Editar Categoria" : "Cadastrar Categoria"}
             </h2>
-            <button type="button" className="btn-close" onClick={onClose}></button>
           </div>
 
           {/* Formulário dentro do corpo */}

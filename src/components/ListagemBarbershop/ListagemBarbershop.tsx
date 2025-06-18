@@ -108,7 +108,7 @@ function ListagemBarbershop() {
               setExibirCadastro(true);
             }}
           >
-            + Cadastrar Barbearia
+            + Cadastrar
           </button>
         </div>
 

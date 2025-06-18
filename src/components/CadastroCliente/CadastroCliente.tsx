@@ -59,10 +59,10 @@ function CadastroCliente() {
       phone: formData.phone,
       active: formData.active,
       document: formData.document,
-      personTypes: [formData.personTypes], // ✅ transformado em array
+      personTypes: formData.personTypes,  // Aqui não precisa mais ser um array
       ...(formData.personTypes === "EMPLOYEE" && {
         employeeData: {
-          hireDate: "2025-05-26",
+          hireDate: "2025-05-26",       // ou dinamicamente via Date()
           terminationDate: "2025-05-26",
           salary: 1500.0,
           commission: 8,
